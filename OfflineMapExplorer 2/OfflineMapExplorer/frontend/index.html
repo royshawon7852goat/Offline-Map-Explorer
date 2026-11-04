@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>OfflineMap Explorer Canvas</title>
+  
+  <!-- Bundled Local Leaflet CSS -->
+  <link rel="stylesheet" href="leaflet/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Bundled Local Leaflet & QWebChannel JS -->
+  <script src="leaflet/leaflet.js"></script>
+  <script src="qwebchannel.js"></script>
+</head>
+<body class="theme-light">
+  <div id="map"></div>
+
+  <!-- Map HUD Overlay Controls -->
+  <div class="hud-overlay top-right">
+    <!-- Offline status badge -->
+    <div id="offline-badge" class="badge-pill online">
+      <span class="status-dot"></span>
+      <span id="offline-badge-text">Connected</span>
+    </div>
+
+    <!-- Map Layer Switcher Floating Button -->
+    <div class="layer-selector-container">
+      <button id="btn-layer-toggle" class="map-ctrl-btn" title="Change Map Layer">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+      </button>
+      <div id="layer-menu" class="layer-dropdown hidden">
+        <div class="layer-item active" data-layer="standard">Standard OSM</div>
+        <div class="layer-item" data-layer="carto_light">Carto Light</div>
+        <div class="layer-item" data-layer="carto_dark">Carto Dark</div>
+        <div class="layer-item" data-layer="offline_only">Local Offline Cache</div>
+      </div>
+    </div>
+
+    <!-- Bounding Box Region Selector Toggle -->
+    <button id="btn-bbox-mode" class="map-ctrl-btn" title="Select Region to Download">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="4 2"></rect>
+        <circle cx="3" cy="3" r="2" fill="currentColor"></circle>
+        <circle cx="21" cy="3" r="2" fill="currentColor"></circle>
+        <circle cx="3" cy="21" r="2" fill="currentColor"></circle>
+        <circle cx="21" cy="21" r="2" fill="currentColor"></circle>
+      </svg>
+    </button>
+  </div>
+
+  <div class="hud-overlay bottom-right">
+    <!-- Center on User Location / GPS -->
+    <button id="btn-gps" class="map-ctrl-btn" title="My Location (GPS)">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+        <circle cx="12" cy="12" r="7"></circle>
+        <line x1="12" y1="2" x2="12" y2="5"></line>
+        <line x1="12" y1="19" x2="12" y2="22"></line>
+        <line x1="2" y1="12" x2="5" y2="12"></line>
+        <line x1="19" y1="12" x2="22" y2="12"></line>
+      </svg>
+    </button>
+    
+    <!-- Reset North / Compass -->
+    <button id="btn-compass" class="map-ctrl-btn" title="Reset North">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+        <polygon points="12 2 19 21 12 17 5 21 12 2" fill="rgba(239, 68, 68, 0.8)" stroke="red"></polygon>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Instruction banner when region selection mode is active -->
+  <div id="bbox-banner" class="bbox-hint-banner hidden">
+    <span>Click & drag on map to select region for download</span>
+    <button id="btn-cancel-bbox" class="btn-sm">Cancel</button>
+  </div>
+
+  <script src="map.js"></script>
+</body>
+</html>
